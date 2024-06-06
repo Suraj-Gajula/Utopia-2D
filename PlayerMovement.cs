@@ -5,14 +5,31 @@ public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody2D PlayerBody;
     private bool IsGrounded;   
+    private Vector2 StartPos;
+    private int Direction;
     void Start(){
         PlayerBody = GetComponent<Rigidbody2D>();
     }
     void Update(){
-        if ((Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) || Input.GetMouseButtonDown(0)){
-            if (IsGrounded){
-                Jump();
+        if(Input.touchCount > 0){
+            if(Input.GetTouch(0).phase == TouchPhase.Began){
+                StartPos = Input.GetTouch(0).position;
+                if (IsGrounded){
+                    Jump();
+                }
             }
+            if(Input.GetTouch(0).phase == TouchPhase.Moved){
+                float Horizontal = Input.GetTouch(0).position.x - StartPos.x;
+                if (Mathf.Abs(Horizontal) > 10f){
+                    Direction = (int)Mathf.Sign(Horizontal);
+                }
+            }
+            else{
+                Direction = 0;
+            }
+        }
+        if(Direction != 0){
+            PlayerBody.velocity = new Vector2(5 * Direction, PlayerBody.velocity.y);
         }
     }
     void Jump(){
