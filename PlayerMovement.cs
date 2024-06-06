@@ -24,12 +24,12 @@ public class PlayerMovement : MonoBehaviour
                     Direction = (int)Mathf.Sign(Horizontal);
                 }
             }
-            else{
-                Direction = 0;
+            if(Direction != 0){
+                PlayerBody.velocity = new Vector2(10 * Direction, PlayerBody.velocity.y);
             }
         }
-        if(Direction != 0){
-            PlayerBody.velocity = new Vector2(5 * Direction, PlayerBody.velocity.y);
+        else{
+            Direction = 0;
         }
     }
     void Jump(){
