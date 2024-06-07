@@ -1,8 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class PlayerMovement : MonoBehaviour
-{
+public class PlayerMovement : MonoBehaviour{
     private Rigidbody2D PlayerBody;
     private bool IsGrounded;  
     private bool HasJumped;  
@@ -49,14 +48,14 @@ public class PlayerMovement : MonoBehaviour
         HasDashed = true;
     }
     private void OnCollisionEnter2D(Collision2D collision){
-        if (collision.gameObject.CompareTag("Ground")){
+        if(collision.gameObject.CompareTag("Ground")){
             IsGrounded = true;
             HasJumped = false;  
             HasDashed = false;
         }
     }
     private void OnCollisionExit2D(Collision2D collision){
-        if (collision.gameObject.CompareTag("Ground")){
+        if(collision.gameObject.CompareTag("Ground")){
             IsGrounded = false;
         }
     }
