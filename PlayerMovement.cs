@@ -15,15 +15,17 @@ public class PlayerMovement : MonoBehaviour
     void Update(){
         if(Input.touchCount > 0){
             if(Input.GetTouch(0).phase == TouchPhase.Began){
-                StartPos = Input.GetTouch(0).position;
-                if(IsGrounded){
-                    Jump();
-                }
-                else if(HasJumped && !HasDashed){
-                    Dash();
+            StartPos = Input.GetTouch(0).position;
+                if(Input.GetTouch(0).position.x > Screen.width/2){
+                    if(IsGrounded){
+                        Jump();
+                    }
+                    else if(HasJumped && !HasDashed){
+                        Dash();
+                    }
                 }
             }
-            if(Input.GetTouch(0).phase == TouchPhase.Moved){
+            if(Input.GetTouch(0).phase == TouchPhase.Moved && Input.GetTouch(0).position.x < Screen.width/2){
                 float Horizontal = Input.GetTouch(0).position.x - StartPos.x;
                 if (Mathf.Abs(Horizontal) > 10f){
                     Direction = (int)Mathf.Sign(Horizontal);
@@ -43,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
         HasJumped = true;  
     }
     void Dash(){
-        PlayerBody.AddForce(PlayerBody.velocity.normalized * 10, ForceMode2D.Impulse);
+        PlayerBody.AddForce(new Vector2(PlayerBody.velocity.x, 0).normalized * 10, ForceMode2D.Impulse);
         HasDashed = true;
     }
     private void OnCollisionEnter2D(Collision2D collision){
