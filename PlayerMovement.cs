@@ -4,7 +4,9 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody2D PlayerBody;
-    private bool IsGrounded;   
+    private bool IsGrounded;  
+    private bool HasJumped;  
+    private bool HasDashed;
     private Vector2 StartPos;
     private int Direction;
     void Start(){
@@ -14,8 +16,11 @@ public class PlayerMovement : MonoBehaviour
         if(Input.touchCount > 0){
             if(Input.GetTouch(0).phase == TouchPhase.Began){
                 StartPos = Input.GetTouch(0).position;
-                if (IsGrounded){
+                if(IsGrounded){
                     Jump();
+                }
+                else if(HasJumped && !HasDashed){
+                    Dash();
                 }
             }
             if(Input.GetTouch(0).phase == TouchPhase.Moved){
@@ -35,10 +40,17 @@ public class PlayerMovement : MonoBehaviour
     void Jump(){
         PlayerBody.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
         IsGrounded = false;
+        HasJumped = true;  
+    }
+    void Dash(){
+        PlayerBody.AddForce(PlayerBody.velocity.normalized * 10, ForceMode2D.Impulse);
+        HasDashed = true;
     }
     private void OnCollisionEnter2D(Collision2D collision){
         if (collision.gameObject.CompareTag("Ground")){
             IsGrounded = true;
+            HasJumped = false;  
+            HasDashed = false;
         }
     }
     private void OnCollisionExit2D(Collision2D collision){
