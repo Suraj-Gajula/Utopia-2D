@@ -38,6 +38,10 @@ public class PlayerMovement : MonoBehaviour{
         else{
             Direction = 0;
         }
+        if (transform.position.y < -10)
+        {
+            Respawn();
+        }
     }
     void Jump(){
         PlayerBody.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
@@ -53,6 +57,10 @@ public class PlayerMovement : MonoBehaviour{
         IsDashing = true;
         yield return new WaitForSeconds(1);
         IsDashing = false;
+    }
+    void Respawn(){
+        transform.position = new Vector3(0, -2, 0);
+        PlayerBody.velocity = Vector2.zero;
     }
     private void OnCollisionEnter2D(Collision2D collision){
         if(collision.gameObject.CompareTag("Ground")){
