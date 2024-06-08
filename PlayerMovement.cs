@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour{
     private bool IsGrounded;  
     private bool HasJumped;  
     private bool HasDashed;
+    public bool IsDashing;
     private Vector2 StartPos;
     private int Direction;
     void Start(){
@@ -46,6 +47,12 @@ public class PlayerMovement : MonoBehaviour{
     void Dash(){
         PlayerBody.AddForce(new Vector2(PlayerBody.velocity.x, 0).normalized * 10, ForceMode2D.Impulse);
         HasDashed = true;
+        StartCoroutine(Attack());
+    }
+    IEnumerator Attack(){
+        IsDashing = true;
+        yield return new WaitForSeconds(1);
+        IsDashing = false;
     }
     private void OnCollisionEnter2D(Collision2D collision){
         if(collision.gameObject.CompareTag("Ground")){
