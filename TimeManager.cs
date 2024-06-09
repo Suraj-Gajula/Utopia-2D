@@ -21,6 +21,12 @@ public static class TimeManager{
     public static TimeSet GetTimeSet(int index){
         return timeSets[index];
     }
+    public static int GetCurrentMinutes(){
+        return timeSets[CurrentLevel].minutes;
+    }
+    public static int GetCurrentSeconds(){
+        return timeSets[CurrentLevel].seconds;
+    }
     public static void SetTimeSet(int minutes, int seconds){
         timeSets[CurrentLevel - 1] = new TimeSet(minutes, seconds);
     }
