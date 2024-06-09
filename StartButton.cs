@@ -1,8 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-public class ReturnButton : MonoBehaviour{
-    public void Return(){
+public class StartButton : MonoBehaviour{
+    public void ChooseLevel(){
         SceneManager.LoadScene("LevelSelect");
-        Time.timeScale = 1f; 
     }
 }
