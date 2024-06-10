@@ -1,9 +1,15 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 public class GoalReached : MonoBehaviour{
     public Timer timer;
+    public int TargetsLeft;
+    public TextMeshProUGUI TargetText;
+    void Update(){
+        TargetText.text = TargetsLeft.ToString() + " Left";
+    }
     private void OnCollisionEnter2D(Collision2D collision){
-        if(collision.gameObject.CompareTag("Player")){
+        if(collision.gameObject.CompareTag("Player") && TargetsLeft == 0){
             int Minutes = Mathf.FloorToInt(timer.ElapsedTime / 60f);
             int Seconds = Mathf.FloorToInt(timer.ElapsedTime % 60f);
             if(Minutes < TimeManager.GetCurrentMinutes() || 
