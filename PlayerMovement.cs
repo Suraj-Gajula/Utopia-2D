@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 public class PlayerMovement : MonoBehaviour{
     private Rigidbody2D PlayerBody;
     private bool IsGrounded;  
@@ -14,59 +15,47 @@ public class PlayerMovement : MonoBehaviour{
         PlayerBody = GetComponent<Rigidbody2D>();
     }
     void Update(){
-        if(Input.touchCount > 0){
-            if(Input.touchCount == 1){
-                if(Input.GetTouch(0).phase == TouchPhase.Began && Input.GetTouch(0).position.x > Screen.width/2){
-                    VerticalMovement();
-                }
-                if(Input.GetTouch(0).phase == TouchPhase.Moved && Input.GetTouch(0).position.x < Screen.width/2){
-                    HorizontalMovement(Input.GetTouch(0));
-                }
-                else if(Input.GetTouch(0).position.x < Screen.width/2){
-                    StartPos = Input.GetTouch(0).position;
-                    }
-                    }
-                    else if(HasJumped && !HasDashed){
-                        Dash();
-                }
-                    else if(HasJumped && !HasDashed){
-                        Dash();
+        if (Input.touchCount > 0){
+            if (Input.touchCount == 1){
+                ButtonHandling(0);
             }
-            if(Input.touchCount == 2){
-                if(Input.GetTouch(1).phase == TouchPhase.Began && Input.GetTouch(1).position.x > Screen.width/2){
-                    VerticalMovement();
-                }
-                if(Input.GetTouch(1).phase == TouchPhase.Moved && Input.GetTouch(1).position.x < Screen.width/2){
-                    HorizontalMovement(Input.GetTouch(1));
-                }
-                else if(Input.GetTouch(1).position.x < Screen.width/2){
-                    StartPos = Input.GetTouch(1).position;
-                }
+            if (Input.touchCount == 2){
+                ButtonHandling(1);
             }
-            if(Direction != 0){
-                PlayerBody.velocity = new Vector2(10 * Direction * DashSpeed, PlayerBody.velocity.y);
+            if (Direction != 0){
+                Vector2 targetVelocity = new Vector2(10 * Direction * DashSpeed, PlayerBody.velocity.y);
+                PlayerBody.velocity = Vector2.Lerp(PlayerBody.velocity, targetVelocity, 0.1f);
             }
         }
-
         else{
             Direction = 0;
         }
-        if (transform.position.y < -10)
-        {
+        if (transform.position.y < -10){
             Respawn();
         }
     }
+    void ButtonHandling(int TouchIndex){
+        if (Input.GetTouch(TouchIndex).phase == TouchPhase.Began && Input.GetTouch(TouchIndex).position.x > Screen.width/2){
+            VerticalMovement();
+        }
+        if (Input.GetTouch(TouchIndex).phase == TouchPhase.Moved && Input.GetTouch(TouchIndex).position.x < Screen.width/2){
+            HorizontalMovement(Input.GetTouch(TouchIndex));
+        }
+        else if (Input.GetTouch(TouchIndex).position.x < Screen.width / 2){
+            StartPos = Input.GetTouch(TouchIndex).position;
+        }
+    }
     void VerticalMovement(){
-        if(!HasJumped){
+        if (!HasJumped){
             StartCoroutine(Jump());
         }
-        else if(HasJumped && !HasDashed){
+        else if (HasJumped && !HasDashed){
             StartCoroutine(Dash());
         }
     }
     void HorizontalMovement(Touch HTouch){
         float Horizontal = HTouch.position.x - StartPos.x;
-        if (Mathf.Abs(Horizontal) > 100){
+        if (Mathf.Abs(Horizontal) > 10){
             Direction = (int)Mathf.Sign(Horizontal);
         }
     }
@@ -79,14 +68,13 @@ public class PlayerMovement : MonoBehaviour{
     IEnumerator Dash(){
         HasDashed = true;
         DashSpeed = 2;
-         IsDashing = true;
+        IsDashing = true;
         yield return new WaitForSeconds(0.5f);
         IsDashing = false;
         DashSpeed = 1;
     }
     void Respawn(){
-        transform.position = new Vector3(0, 0, 0);
-        PlayerBody.velocity = Vector2.zero;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
     private void OnCollisionEnter2D(Collision2D collision){
         if(collision.gameObject.CompareTag("Ground")){
