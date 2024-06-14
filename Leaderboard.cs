@@ -4,8 +4,10 @@ using System.Text;
 public class Leaderboard : MonoBehaviour{
     public GameObject LeaderboardBG;
     public GameObject LeaderboardReset;
+    public GameObject UpdatesButton;
     public TextMeshProUGUI LeaderBoardText;
     public void ActivateLeaderboard(){
+        UpdatesButton.SetActive(!UpdatesButton.activeSelf);
         LeaderboardBG.SetActive(!LeaderboardBG.activeSelf);
         LeaderboardReset.SetActive(!LeaderboardReset.activeSelf);
         SetLeaderboard();
