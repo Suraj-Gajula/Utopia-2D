@@ -8,7 +8,6 @@ public class PlayerMovement : MonoBehaviour{
     private bool HasJumped;  
     private bool HasDashed;
     public bool IsDashing;
-    private int DashSpeed = 1;
     private Vector2 StartPos;
     private int Direction;
     void Start(){
@@ -22,8 +21,8 @@ public class PlayerMovement : MonoBehaviour{
             if (Input.touchCount == 2){
                 ButtonHandling(1);
             }
-            if (Direction != 0){
-                Vector2 targetVelocity = new Vector2(10 * Direction * DashSpeed, PlayerBody.velocity.y);
+            if (Direction != 0 && !IsDashing){
+                Vector2 targetVelocity = new Vector2(10 * Direction, PlayerBody.velocity.y);
                 PlayerBody.velocity = Vector2.Lerp(PlayerBody.velocity, targetVelocity, 0.1f);
             }
         }
@@ -65,13 +64,16 @@ public class PlayerMovement : MonoBehaviour{
         yield return new WaitForSeconds(0.1f);
         HasJumped = true;  
     }
-    IEnumerator Dash(){
+    IEnumerator Dash()
+    {
         HasDashed = true;
-        DashSpeed = 2;
         IsDashing = true;
-        yield return new WaitForSeconds(0.5f);
+        PlayerBody.gravityScale = 0;
+        PlayerBody.velocity = new Vector2(PlayerBody.velocity.x, 0).normalized * 20;
+        yield return new WaitForSeconds(0.2f);
+        PlayerBody.gravityScale = 1;
+        yield return new WaitForSeconds(0.3f);
         IsDashing = false;
-        DashSpeed = 1;
     }
     void Respawn(){
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);

@@ -11,7 +11,7 @@ public struct TimeSet{
     }
 }
 public static class TimeManager{
-    private static TimeSet[] timeSets = new TimeSet[10];
+    private static TimeSet[] timeSets = new TimeSet[1];
     public static int CurrentLevel;
     static TimeManager(){
         for (int i = 0; i < timeSets.Length; i++){
