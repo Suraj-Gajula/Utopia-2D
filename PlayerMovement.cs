@@ -85,7 +85,7 @@ public class PlayerMovement : MonoBehaviour{
         DashSpeed = 1;
     }
     void Respawn(){
-        transform.position = new Vector3(0, -2, 0);
+        transform.position = new Vector3(0, 0, 0);
         PlayerBody.velocity = Vector2.zero;
     }
     private void OnCollisionEnter2D(Collision2D collision){
