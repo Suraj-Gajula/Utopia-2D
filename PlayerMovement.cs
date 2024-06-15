@@ -11,7 +11,9 @@ public class PlayerMovement : MonoBehaviour{
     private Vector2 StartPos;
     private int Direction;
     public Animator PlayerAnimator;
+    public int Apples;
     void Start(){
+        Apples = 0;
         PlayerBody = GetComponent<Rigidbody2D>();
         PlayerAnimator = GetComponent<Animator>();
     }
