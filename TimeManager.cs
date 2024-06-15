@@ -22,10 +22,10 @@ public static class TimeManager{
         return timeSets[index];
     }
     public static int GetCurrentMinutes(){
-        return timeSets[CurrentLevel].minutes;
+        return timeSets[CurrentLevel - 1].minutes;
     }
     public static int GetCurrentSeconds(){
-        return timeSets[CurrentLevel].seconds;
+        return timeSets[CurrentLevel - 1].seconds;
     }
     public static void SetTimeSet(int minutes, int seconds){
         timeSets[CurrentLevel - 1] = new TimeSet(minutes, seconds);
