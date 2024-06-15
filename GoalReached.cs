@@ -5,8 +5,11 @@ public class GoalReached : MonoBehaviour{
     public Timer timer;
     public int TargetsLeft;
     public TextMeshProUGUI TargetText;
+    public TextMeshProUGUI CollectibleText;
+    public PlayerMovement Player;
     void Update(){
-        TargetText.text = TargetsLeft.ToString() + " Left";
+        TargetText.text = TargetsLeft.ToString() + " Targets Left";
+        CollectibleText.text = Player.Apples + "/100 Apples";
     }
     private void OnCollisionEnter2D(Collision2D collision){
         if(collision.gameObject.CompareTag("Player") && TargetsLeft == 0){

@@ -34,7 +34,7 @@ public class PlayerMovement : MonoBehaviour{
             Direction = 0;
         }
         if(transform.position.y < -10){
-            Respawn();
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
         if(PlayerBody.velocity.x != 0){
             PlayerAnimator.SetBool("IsMoving", true);
@@ -86,9 +86,6 @@ public class PlayerMovement : MonoBehaviour{
         yield return new WaitForSeconds(0.3f);
         IsDashing = false;
         PlayerAnimator.SetBool("IsDashing", true);
-    }
-    void Respawn(){
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
     private void OnCollisionEnter2D(Collision2D collision){
         if(collision.gameObject.CompareTag("Ground")){
