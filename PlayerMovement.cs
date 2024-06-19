@@ -50,15 +50,15 @@ public class PlayerMovement : MonoBehaviour{
         if (Input.GetTouch(TouchIndex).phase == TouchPhase.Moved && Input.GetTouch(TouchIndex).position.x < Screen.width/2){
             HorizontalMovement(Input.GetTouch(TouchIndex));
         }
-        else if (Input.GetTouch(TouchIndex).position.x < Screen.width / 2){
+        else if (Input.GetTouch(TouchIndex).position.x < Screen.width/2){
             StartPos = Input.GetTouch(TouchIndex).position;
         }
     }
     void VerticalMovement(){
-        if (!HasJumped){
+        if(!HasJumped){
             StartCoroutine(Jump());
         }
-        else if (HasJumped && !HasDashed){
+        else if(HasJumped && !HasDashed){
             StartCoroutine(Dash());
         }
     }
@@ -74,8 +74,7 @@ public class PlayerMovement : MonoBehaviour{
         yield return new WaitForSeconds(0.1f);
         HasJumped = true;  
     }
-    IEnumerator Dash()
-    {
+    IEnumerator Dash(){
         HasDashed = true;
         IsDashing = true;
         PlayerAnimator.SetBool("IsDashing", true);

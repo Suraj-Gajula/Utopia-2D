@@ -34,7 +34,7 @@ public static class TimeManager{
         CurrentLevel = Level;
     }
     public static void ResetAllTimeSets(){
-        for (int i = 0; i < timeSets.Length; i++){
+        for(int i = 0; i < timeSets.Length; i++){
             timeSets[i] = new TimeSet(0, 0);
         }
     }

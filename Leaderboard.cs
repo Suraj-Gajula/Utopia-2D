@@ -14,7 +14,7 @@ public class Leaderboard : MonoBehaviour{
     }
     public void SetLeaderboard(){
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < 1; i++){
+        for(int i = 0; i < 1; i++){
             sb.AppendLine($"Level {i + 1}: {TimeManager.GetTimeSet(i).ToString()}");
         }
         LeaderBoardText.text = sb.ToString();

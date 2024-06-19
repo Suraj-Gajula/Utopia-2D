@@ -6,7 +6,7 @@ public class PauseButton : MonoBehaviour{
     public GameObject Return;
     public void Pause(){
         IsPaused = !IsPaused;
-        if (IsPaused){
+        if(IsPaused){
             Restart.SetActive(true);
             Return.SetActive(true);
             Tint.SetActive(true);
