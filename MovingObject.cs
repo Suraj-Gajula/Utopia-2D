@@ -1,19 +1,19 @@
 using UnityEngine;
 public class MovingObject : MonoBehaviour{
-    public Vector2 positionA;
-    public Vector2 positionB;
+    public Vector2[] Positions;
     private Rigidbody2D PlatformBody;
     private Vector2 targetPosition;
     private bool movingToB = true;
+    private int currentPosition = 0;
     void Start(){
         PlatformBody = GetComponent<Rigidbody2D>();
-        targetPosition = positionB;
+        targetPosition = Positions[currentPosition];
     }
     void FixedUpdate(){
-        PlatformBody.MovePosition(Vector2.MoveTowards(PlatformBody.position, targetPosition, Time.fixedDeltaTime));
+        PlatformBody.MovePosition(Vector2.MoveTowards(PlatformBody.position, targetPosition, 2 * Time.fixedDeltaTime));
         if (Vector2.Distance(PlatformBody.position, targetPosition) < 0.01f){
-        targetPosition = movingToB ? positionA : positionB;
-            movingToB = !movingToB;
+            currentPosition = (currentPosition + 1) % Positions.Length;
+            targetPosition = Positions[currentPosition];
         }
     }
 }
