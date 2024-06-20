@@ -10,7 +10,7 @@ public class MovingObject : MonoBehaviour{
         targetPosition = Positions[currentPosition];
     }
     void FixedUpdate(){
-        PlatformBody.MovePosition(Vector2.MoveTowards(PlatformBody.position, targetPosition, 2 * Time.fixedDeltaTime));
+        PlatformBody.MovePosition(Vector2.MoveTowards(PlatformBody.position, targetPosition, Time.fixedDeltaTime));
         if (Vector2.Distance(PlatformBody.position, targetPosition) < 0.01f){
             currentPosition = (currentPosition + 1) % Positions.Length;
             targetPosition = Positions[currentPosition];
